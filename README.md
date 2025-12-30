@@ -195,10 +195,9 @@ curl http://helloworld-go.default.127.0.0.1.sslip.io
 **现象/原因**：笔记本换关机后系统时间停滞，开机后 K3s 发现时间和证书不一致(<invalid> ago)
 #### ✅ 解决方案：
  每次关机前使用systemctl stop k3s，手动停止k3s，开机后再start k3s；如果关机时忘记停止k3s，出现这个问题可以使用
-    ```bash
+  ```bash
     kubectl delete pod --all -A --grace-period=0 –force 
-    ```
-
+  ```
   来删除所有命名空间下的所有 Pod，让k3s重新创建建新的（带有正确时间戳和证书的）Pod，这个重新创建不需要重新拉源，因为我们本地已经有镜像源，所以恢复的很快。
 
 
